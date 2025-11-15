@@ -88,3 +88,5 @@ logs/
 Thumbs.db
 .DS_Store
 
+# git
+.gitignore
