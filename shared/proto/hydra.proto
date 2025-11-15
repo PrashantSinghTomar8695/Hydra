@@ -1,0 +1,202 @@
+syntax = "proto3";
+
+package hydra;
+
+// Core service definition
+service HydraService {
+  // Submit a new job
+  rpc SubmitJob(JobRequest) returns (JobAck);
+  
+  // Upload a data chunk
+  rpc UploadChunk(ChunkUpload) returns (ChunkAck);
+  
+  // Get job status
+  rpc GetJobStatus(JobStatusRequest) returns (JobStatus);
+  
+  // Bidirectional heartbeat stream
+  rpc StreamHeartbeat(stream Heartbeat) returns (stream Heartbeat);
+  
+  // Pairing request
+  rpc Pair(PairingRequest) returns (PairingResponse);
+  
+  // Recovery state sync
+  rpc SyncRecoveryState(RecoveryStateRequest) returns (RecoveryState);
+}
+
+// Job types
+enum JobType {
+  JOB_TYPE_UNKNOWN = 0;
+  JOB_TYPE_INFERENCE = 1;
+  JOB_TYPE_PREPROCESS = 2;
+  JOB_TYPE_POSTPROCESS = 3;
+  JOB_TYPE_STORAGE = 4;
+}
+
+// Error codes
+enum ErrorCode {
+  ERROR_UNKNOWN = 0;
+  ERROR_NETWORK_TIMEOUT = 1;
+  ERROR_INVALID_JOB_ID = 2;
+  ERROR_INVALID_CHUNK = 3;
+  ERROR_BATTERY_LOW = 4;
+  ERROR_THERMAL_THROTTLE = 5;
+  ERROR_INFERENCE_FAILED = 6;
+  ERROR_STORAGE_FULL = 7;
+  ERROR_AUTHENTICATION_FAILED = 8;
+  ERROR_STREAM_RESET = 9;
+  ERROR_DEVICE_OFFLINE = 10;
+  ERROR_JOB_NOT_FOUND = 11;
+  ERROR_CHUNK_CHECKSUM_FAILED = 12;
+}
+
+// Job request
+message JobRequest {
+  string job_id = 1;
+  JobType type = 2;
+  int32 total_chunks = 3;
+  bytes metadata = 4; // JSON-encoded metadata
+  int64 timestamp = 5;
+  int64 ttl_seconds = 6; // TTL for RAM store
+  string model_name = 7; // ONNX model identifier
+}
+
+// Job acknowledgment
+message JobAck {
+  string job_id = 1;
+  bool accepted = 2;
+  ErrorCode error_code = 3;
+  string error_message = 4;
+  int64 timestamp = 5;
+}
+
+// Chunk upload
+message ChunkUpload {
+  string job_id = 1;
+  int32 chunk_index = 2;
+  int32 total_chunks = 3;
+  bytes data = 4;
+  bytes checksum = 5; // SHA-256 checksum
+  int64 timestamp = 6;
+}
+
+// Chunk acknowledgment
+message ChunkAck {
+  string job_id = 1;
+  int32 chunk_index = 2;
+  bool accepted = 3;
+  ErrorCode error_code = 4;
+  string error_message = 5;
+  int64 timestamp = 6;
+}
+
+// Inference result
+message InferenceResult {
+  string job_id = 1;
+  repeated float output_tensors = 2; // Flattened tensor data
+  repeated int32 output_shape = 3; // Tensor shape
+  int32 output_type = 4; // 0=float32, 1=int32, 2=int8
+  bytes raw_output = 5; // Alternative: raw bytes
+  map<string, string> metadata = 6; // Additional metadata
+  float inference_time_ms = 7;
+}
+
+// Job response
+message JobResponse {
+  string job_id = 1;
+  InferenceResult result = 2;
+  bytes output_data = 3; // Serialized output
+  int32 status_code = 4; // HTTP-like status (200=OK, etc.)
+  ErrorCode error_code = 5;
+  string error_message = 6;
+  int64 timestamp = 7;
+}
+
+// Job status request
+message JobStatusRequest {
+  string job_id = 1;
+}
+
+// Job status
+message JobStatus {
+  string job_id = 1;
+  int32 completed_chunks = 2;
+  int32 total_chunks = 3;
+  bool inference_started = 4;
+  bool inference_completed = 5;
+  int64 last_update = 6;
+  string status_message = 7;
+}
+
+// Heartbeat message
+message Heartbeat {
+  float battery_percent = 1;
+  float cpu_temp = 2; // Celsius
+  int64 ram_usage_bytes = 3;
+  bool thermal_throttling = 4;
+  int32 inference_queue_length = 5;
+  int64 timestamp = 6;
+  string device_id = 7;
+  bool foreground_service_alive = 8;
+}
+
+// Pairing request
+message PairingRequest {
+  string token = 1; // Ephemeral pairing token
+  string device_id = 2; // Client device ID
+  int64 timestamp = 3;
+  bytes client_certificate = 4; // Client x.509 certificate
+}
+
+// Pairing response
+message PairingResponse {
+  bool success = 1;
+  string session_token = 2; // Session token (24-hour validity)
+  int64 expires_at = 3;
+  ErrorCode error_code = 4;
+  string error_message = 5;
+  bytes server_certificate = 6; // Server x.509 certificate
+}
+
+// Recovery state request
+message RecoveryStateRequest {
+  string device_id = 1;
+  int64 last_sync_timestamp = 2;
+}
+
+// Recovery state
+message RecoveryState {
+  repeated string incomplete_job_ids = 1;
+  map<string, JobStatus> job_statuses = 2; // job_id -> status
+  int64 snapshot_timestamp = 3;
+  bool ram_store_restored = 4;
+  int64 recovery_timestamp = 5;
+}
+
+// Battery alert
+message BatteryAlert {
+  string device_id = 1;
+  float battery_percent = 2;
+  int32 alert_level = 3; // 1=low (15%), 2=critical (12%), 3=emergency (10%)
+  string message = 4;
+  int64 timestamp = 5;
+}
+
+// Thermal alert
+message ThermalAlert {
+  string device_id = 1;
+  float cpu_temp = 2;
+  float gpu_temp = 3;
+  bool throttling_active = 4;
+  string message = 5;
+  int64 timestamp = 6;
+}
+
+// Error response
+message ErrorResponse {
+  ErrorCode code = 1;
+  string message = 2;
+  int64 timestamp = 3;
+  string job_id = 4; // If applicable
+  map<string, string> context = 5; // Additional context
+}
+

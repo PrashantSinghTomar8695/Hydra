@@ -1,0 +1,448 @@
+    Updating crates.io index
+     Locking 59 packages to latest compatible versions
+      Adding android_logger v0.13.3 (available: v0.15.1)
+      Adding generic-array v0.14.7 (available: v0.14.9)
+      Adding rand v0.8.5 (available: v0.9.2)
+ Downloading crates ...
+  Downloaded cesu8 v1.1.0
+  Downloaded jni-sys v0.3.0
+  Downloaded itoa v1.0.15
+  Downloaded rand_core v0.6.4
+  Downloaded cfg-if v1.0.4
+  Downloaded block-buffer v0.10.4
+  Downloaded thiserror-impl v1.0.69
+  Downloaded generic-array v0.14.7
+  Downloaded version_check v0.9.5
+  Downloaded thiserror v1.0.69
+  Downloaded same-file v1.0.6
+  Downloaded digest v0.10.7
+  Downloaded cpufeatures v0.2.17
+  Downloaded crypto-common v0.1.7
+  Downloaded walkdir v2.5.0
+  Downloaded rand_chacha v0.3.1
+  Downloaded sha2 v0.10.9
+  Downloaded getrandom v0.2.16
+  Downloaded unicode-ident v1.0.22
+  Downloaded quote v1.0.42
+  Downloaded ppv-lite86 v0.2.21
+  Downloaded once_cell v1.21.3
+  Downloaded serde_derive v1.0.228
+  Downloaded proc-macro2 v1.0.103
+  Downloaded typenum v1.19.0
+  Downloaded bytes v1.11.0
+  Downloaded serde_core v1.0.228
+  Downloaded serde v1.0.228
+  Downloaded rand v0.8.5
+  Downloaded memchr v2.7.6
+  Downloaded combine v4.6.7
+  Downloaded serde_json v1.0.145
+  Downloaded jni v0.21.1
+  Downloaded ryu v1.0.20
+  Downloaded log v0.4.28
+  Downloaded zerocopy v0.8.27
+  Downloaded syn v2.0.110
+  Downloaded libc v0.2.177
+   Compiling proc-macro2 v1.0.103
+   Compiling unicode-ident v1.0.22
+   Compiling quote v1.0.42
+   Compiling version_check v0.9.5
+   Compiling typenum v1.19.0
+   Compiling cfg-if v1.0.4
+   Compiling libc v0.2.177
+   Compiling zerocopy v0.8.27
+   Compiling serde_core v1.0.228
+   Compiling thiserror v1.0.69
+   Compiling generic-array v0.14.7
+   Compiling memchr v2.7.6
+   Compiling serde_json v1.0.145
+   Compiling bytes v1.11.0
+   Compiling serde v1.0.228
+   Compiling syn v2.0.110
+   Compiling getrandom v0.2.16
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling rand_core v0.6.4
+   Compiling combine v4.6.7
+   Compiling digest v0.10.7
+   Compiling log v0.4.28
+   Compiling cpufeatures v0.2.17
+   Compiling ppv-lite86 v0.2.21
+   Compiling itoa v1.0.15
+   Compiling ryu v1.0.20
+   Compiling cesu8 v1.1.0
+   Compiling jni-sys v0.3.0
+   Compiling sha2 v0.10.9
+   Compiling once_cell v1.21.3
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
+   Compiling thiserror-impl v1.0.69
+   Compiling serde_derive v1.0.228
+   Compiling jni v0.21.1
+   Compiling ramstore v0.1.0 (/mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust)
+error[E0106]: missing lifetime specifier
+   --> src/lib.rs:193:6
+    |
+191 |     mut env: JNIEnv,
+    |              ------
+192 |     _class: JClass,
+    |             ------
+193 | ) -> JObject {
+    |      ^^^^^^^ expected named lifetime parameter
+    |
+    = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `env` or `_class`
+help: consider introducing a named lifetime parameter
+    |
+190 ~ pub extern "system" fn Java_com_hydra_jni_RAMStoreJNI_getStats<'a>(
+191 ~     mut env: JNIEnv<'a>,
+192 ~     _class: JClass<'a>,
+193 ~ ) -> JObject<'a> {
+    |
+
+error[E0412]: cannot find type `jintArray` in this scope
+   --> src/lib.rs:100:6
+    |
+100 | ) -> jintArray {
+    |      ^^^^^^^^^
+    |
+   ::: /home/redrex/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jni-sys-0.3.0/src/lib.rs:27:1
+    |
+ 27 | pub type jbyteArray = jarray;
+    | ------------------- similarly named type alias `jbyteArray` defined here
+    |
+help: a type alias with a similar name exists
+    |
+100 - ) -> jintArray {
+100 + ) -> jbyteArray {
+    |
+help: consider importing this type alias
+    |
+  1 + use jni::sys::jintArray;
+    |
+
+warning: unused import: `std::collections::HashMap`
+ --> src/lib.rs:4:5
+  |
+4 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `SystemTime` and `UNIX_EPOCH`
+ --> src/lib.rs:6:17
+  |
+6 | use std::time::{SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^^^^  ^^^^^^^^^^
+
+warning: unused import: `Sha256`
+ --> src/lib.rs:7:12
+  |
+7 | use sha2::{Sha256, Digest};
+  |            ^^^^^^
+
+warning: unused imports: `ChunkData` and `StoreStats`
+  --> src/lib.rs:12:23
+   |
+12 | use store::{RAMStore, ChunkData, StoreStats};
+   |                       ^^^^^^^^^  ^^^^^^^^^^
+
+error[E0308]: mismatched types
+    --> src/lib.rs:50:41
+     |
+  50 |     env.get_byte_array_region(&data, 0, &mut data_bytes).unwrap();
+     |         ---------------------           ^^^^^^^^^^^^^^^ expected `&mut [i8]`, found `&mut Vec<u8>`
+     |         |
+     |         arguments to this method are incorrect
+     |
+     = note: expected mutable reference `&mut [i8]`
+                found mutable reference `&mut Vec<u8>`
+note: method defined here
+    --> /home/redrex/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jni-0.21.1/src/wrapper/jnienv.rs:1859:12
+     |
+1859 |     pub fn get_byte_array_region<'other_local>(
+     |            ^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+    --> src/lib.rs:54:45
+     |
+  54 |     env.get_byte_array_region(&checksum, 0, &mut checksum_bytes).unwrap();
+     |         ---------------------               ^^^^^^^^^^^^^^^^^^^ expected `&mut [i8]`, found `&mut Vec<u8>`
+     |         |
+     |         arguments to this method are incorrect
+     |
+     = note: expected mutable reference `&mut [i8]`
+                found mutable reference `&mut Vec<u8>`
+note: method defined here
+    --> /home/redrex/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jni-0.21.1/src/wrapper/jnienv.rs:1859:12
+     |
+1859 |     pub fn get_byte_array_region<'other_local>(
+     |            ^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+    --> src/lib.rs:87:50
+     |
+  87 |             env.set_byte_array_region(&array, 0, &data).unwrap();
+     |                 ---------------------            ^^^^^ expected `&[i8]`, found `&Vec<u8>`
+     |                 |
+     |                 arguments to this method are incorrect
+     |
+     = note: expected reference `&[i8]`
+                found reference `&Vec<u8>`
+note: method defined here
+    --> /home/redrex/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jni-0.21.1/src/wrapper/jnienv.rs:2062:12
+     |
+2062 |     pub fn set_byte_array_region<'other_local>(
+     |            ^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+  --> src/lib.rs:88:20
+   |
+77 | ) -> jbyteArray {
+   |      ---------- expected `*mut _jobject` because of return type
+...
+88 |             return array;
+   |                    ^^^^^ expected `*mut _jobject`, found `JPrimitiveArray<'_, i8>`
+   |
+   = note: expected raw pointer `*mut _jobject`
+                   found struct `JPrimitiveArray<'_, i8>`
+help: consider dereferencing the type
+   |
+88 |             return **array;
+   |                    ++
+
+error[E0308]: mismatched types
+  --> src/lib.rs:92:5
+   |
+77 | ) -> jbyteArray {
+   |      ---------- expected `*mut _jobject` because of return type
+...
+92 |     env.new_byte_array(0).unwrap()
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `*mut _jobject`, found `JPrimitiveArray<'_, i8>`
+   |
+   = note: expected raw pointer `*mut _jobject`
+                   found struct `JPrimitiveArray<'_, i8>`
+help: consider dereferencing the type
+   |
+92 |     **env.new_byte_array(0).unwrap()
+   |     ++
+
+error[E0308]: mismatched types
+   --> src/lib.rs:203:17
+    |
+203 |                 stats.current_size_bytes as i64,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `JValueGen<&JObject<'_>>`, found `i64`
+    |
+    = note: expected enum `JValueGen<&JObject<'_>>`
+               found type `i64`
+help: try wrapping the expression in `jni::objects::JValueGen::Long`
+    |
+203 |                 jni::objects::JValueGen::Long(stats.current_size_bytes as i64),
+    |                 ++++++++++++++++++++++++++++++                               +
+
+error[E0308]: mismatched types
+   --> src/lib.rs:215:11
+    |
+215 |         &[0i64, 0i64, 0i32, 0.0f64],
+    |           ^^^^ expected `JValueGen<&JObject<'_>>`, found `i64`
+    |
+    = note: expected enum `JValueGen<&JObject<'_>>`
+               found type `i64`
+help: try wrapping the expression in `jni::objects::JValueGen::Long`
+    |
+215 |         &[jni::objects::JValueGen::Long(0i64), 0i64, 0i32, 0.0f64],
+    |           ++++++++++++++++++++++++++++++    +
+
+warning: unused import: `Digest`
+ --> src/lib.rs:7:20
+  |
+7 | use sha2::{Sha256, Digest};
+  |                    ^^^^^^
+
+warning: unused variable: `now`
+  --> src/store.rs:82:17
+   |
+82 |             let now = Self::current_timestamp();
+   |                 ^^^ help: if this is intentional, prefix it with an underscore: `_now`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+error[E0596]: cannot borrow `store` as mutable, as it is not declared as mutable
+   --> src/lib.rs:130:31
+    |
+130 |     if let Some(ref mut s) = *store {
+    |                               ^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+129 |     let mut store = STORE.write().unwrap();
+    |         +++
+
+error[E0596]: cannot borrow `store` as mutable, as it is not declared as mutable
+   --> src/lib.rs:149:31
+    |
+149 |     if let Some(ref mut s) = *store {
+    |                               ^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+148 |     let mut store = STORE.write().unwrap();
+    |         +++
+
+error[E0596]: cannot borrow `store` as mutable, as it is not declared as mutable
+   --> src/lib.rs:173:31
+    |
+173 |     if let Some(ref mut s) = *store {
+    |                               ^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+172 |     let mut store = STORE.write().unwrap();
+    |         +++
+
+Some errors have detailed explanations: E0106, E0308, E0412, E0596.
+For more information about an error, try `rustc --explain E0106`.
+warning: `ramstore` (lib) generated 6 warnings
+error: could not compile `ramstore` (lib) due to 12 previous errors; 6 warnings emitted
+warning: build failed, waiting for other jobs to finish...
+warning: `ramstore` (lib test) generated 6 warnings (6 duplicates)
+error: could not compile `ramstore` (lib test) due to 12 previous errors; 6 warnings emitted
+   Compiling proc-macro2 v1.0.103
+   Compiling quote v1.0.42
+   Compiling typenum v1.19.0
+   Compiling libc v0.2.177
+   Compiling generic-array v0.14.7
+   Compiling serde_core v1.0.228
+   Compiling thiserror v1.0.69
+   Compiling syn v2.0.110
+   Compiling getrandom v0.2.16
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling rand_core v0.6.4
+   Compiling digest v0.10.7
+   Compiling rand_chacha v0.3.1
+   Compiling sha2 v0.10.9
+   Compiling rand v0.8.5
+   Compiling serde_json v1.0.145
+   Compiling thiserror-impl v1.0.69
+   Compiling serde_derive v1.0.228
+   Compiling jni v0.21.1
+   Compiling serde v1.0.228
+   Compiling ramstore v0.1.0 (/mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust)
+warning: unused import: `StoreStats`
+ --> src/lib.rs:9:23
+  |
+9 | use store::{RAMStore, StoreStats};
+  |                       ^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+  --> src/store.rs:78:13
+   |
+78 |         let mut cache = self.cache.write().unwrap();
+   |             ----^^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+error[E0499]: cannot borrow `env` as mutable more than once at a time
+   --> src/lib.rs:215:9
+    |
+214 |     env.new_object(
+    |     --- ---------- first borrow later used by call
+    |     |
+    |     first mutable borrow occurs here
+215 |         env.find_class("com/hydra/ramstore/StoreStats").unwrap(),
+    |         ^^^ second mutable borrow occurs here
+    |
+help: try adding a local storing this argument...
+   --> src/lib.rs:215:9
+    |
+215 |         env.find_class("com/hydra/ramstore/StoreStats").unwrap(),
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: ...and then using that local as the argument to this call
+   --> src/lib.rs:214:5
+    |
+214 | /     env.new_object(
+215 | |         env.find_class("com/hydra/ramstore/StoreStats").unwrap(),
+216 | |         "(JJID)V",
+217 | |         &[
+...   |
+222 | |         ],
+223 | |     ).unwrap()
+    | |_____^
+
+For more information about this error, try `rustc --explain E0499`.
+warning: `ramstore` (lib test) generated 2 warnings (2 duplicates)
+error: could not compile `ramstore` (lib test) due to 1 previous error; 2 warnings emitted
+warning: build failed, waiting for other jobs to finish...
+warning: `ramstore` (lib) generated 2 warnings
+error: could not compile `ramstore` (lib) due to 1 previous error; 2 warnings emitted
+   Compiling ramstore v0.1.0 (/mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust)
+warning: unused import: `StoreStats`
+ --> src/lib.rs:9:23
+  |
+9 | use store::{RAMStore, StoreStats};
+  |                       ^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `job_id`, `chunk_index`, `checksum`, `timestamp`, `ttl`, and `access_count` are never read
+  --> src/store.rs:7:9
+   |
+ 6 | pub struct ChunkData {
+   |            --------- fields in this struct
+ 7 |     pub job_id: String,
+   |         ^^^^^^
+ 8 |     pub chunk_index: u32,
+   |         ^^^^^^^^^^^
+ 9 |     pub data: Vec<u8>,
+10 |     pub checksum: [u8; 32],
+   |         ^^^^^^^^
+11 |     pub timestamp: i64,
+   |         ^^^^^^^^^
+12 |     pub ttl: i64,
+   |         ^^^
+13 |     pub access_count: u32,
+   |         ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `snapshot_path` is never read
+  --> src/store.rs:28:5
+   |
+24 | pub struct RAMStore {
+   |            -------- field in this struct
+...
+28 |     snapshot_path: String,
+   |     ^^^^^^^^^^^^^
+
+warning: struct `SnapshotManager` is never constructed
+ --> src/snapshot.rs:4:12
+  |
+4 | pub struct SnapshotManager {
+  |            ^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `create_snapshot`, `load_snapshot`, `append_journal`, and `replay_journal` are never used
+  --> src/snapshot.rs:10:12
+   |
+ 9 | impl SnapshotManager {
+   | -------------------- associated items in this implementation
+10 |     pub fn new(snapshot_path: String) -> Self {
+   |            ^^^
+...
+18 |     pub fn create_snapshot(&self, _data: &[u8]) {
+   |            ^^^^^^^^^^^^^^^
+...
+25 |     pub fn load_snapshot(&self) -> Option<Vec<u8>> {
+   |            ^^^^^^^^^^^^^
+...
+33 |     pub fn append_journal(&self, _entry: &[u8]) {
+   |            ^^^^^^^^^^^^^^
+...
+37 |     pub fn replay_journal(&self) {
+   |            ^^^^^^^^^^^^^^
+
+warning: `ramstore` (lib) generated 5 warnings (run `cargo fix --lib -p ramstore` to apply 1 suggestion)
+warning: `ramstore` (lib test) generated 5 warnings (5 duplicates)
+    Finished `release` profile [optimized] target(s) in 4.17s

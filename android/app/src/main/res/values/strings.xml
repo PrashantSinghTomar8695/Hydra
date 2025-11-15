@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hydra</string>
+    <string name="service_notification_title">Hydra Service</string>
+    <string name="service_notification_text">Edge compute node active</string>
+</resources>
+
