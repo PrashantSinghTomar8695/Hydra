@@ -1,0 +1,90 @@
+# Build artifacts
+build/
+target/
+*.apk
+*.aab
+*.ipa
+*.dSYM
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# Rust
+Cargo.lock
+target/
+**/*.rs.bk
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# iOS
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Android
+*.iml
+local.properties
+.gradle/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Reports and scan results
+reports/
+scan-reports/
+code-review-report.*
+vulnerability-report.*
+security-report.*
+ai-proofreading-report.*
+*.sarif
+*.json.report
+*.html.report
+*.txt.report
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# OS
+Thumbs.db
+.DS_Store
+
