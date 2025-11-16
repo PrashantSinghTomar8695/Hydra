@@ -24,11 +24,18 @@ Project Hydra is a distributed edge computing system that transforms a Samsung S
 
 ### Prerequisites
 
-- **Android:** Android Studio, NDK, Rust toolchain
+- **Rust:** Rust toolchain (1.70+)
+- **Android:** Android Studio, NDK
 - **iOS:** Xcode 14+, Swift 5.7+
-- **Both:** Protobuf compiler
+- **Both:** Protobuf compiler (optional)
 
 ### Build
+
+**Quick Build:**
+```bash
+# Build Rust components
+./build.sh
+```
 
 See [BUILD_INSTRUCTIONS.md](BUILD_INSTRUCTIONS.md) for detailed build steps.
 

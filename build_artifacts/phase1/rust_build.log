@@ -1,4 +1,0 @@
-Attempting Rust build...
-Date: Sun Nov 16 12:36:29 AM IST 2025
-Working directory: /mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust
-build_artifacts/phase1/attempt_rust_build.sh: line 15: cargo: command not found
