@@ -1,1 +1,0 @@
-/mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust/target/release/libramstore.so: /mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust/src/lib.rs /mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust/src/snapshot.rs /mnt/c/Users/prash/OneDrive/Documents/test_project/android/rust/src/store.rs
