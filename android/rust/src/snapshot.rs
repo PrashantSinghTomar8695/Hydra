@@ -14,14 +14,14 @@ impl SnapshotManager {
             journal_path,
         }
     }
-    
+
     pub fn create_snapshot(&self, _data: &[u8]) {
         // Implementation would:
         // 1. Serialize cache to binary format
         // 2. Write to snapshot file
         // 3. Compute checksum
     }
-    
+
     pub fn load_snapshot(&self) -> Option<Vec<u8>> {
         // Implementation would:
         // 1. Read snapshot file
@@ -29,13 +29,12 @@ impl SnapshotManager {
         // 3. Deserialize data
         None
     }
-    
+
     pub fn append_journal(&self, _entry: &[u8]) {
         // Implementation would append to WAL
     }
-    
+
     pub fn replay_journal(&self) {
         // Implementation would replay WAL entries
     }
 }
-
