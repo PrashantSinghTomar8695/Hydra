@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-REPO_PATH="/mnt/c/Users/prash/OneDrive/Documents/test_project"
+# Determine repository path - use current directory if not specified
+REPO_PATH="${REPO_PATH:-$(pwd)}"
 ARTIFACTS_DIR="$REPO_PATH/build_artifacts/phase1"
 ACTIONS_LOG="$ARTIFACTS_DIR/actions.log"
 
